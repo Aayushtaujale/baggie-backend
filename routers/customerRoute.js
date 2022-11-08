@@ -70,11 +70,3 @@ router.post("/customer/login",(req,res)=>{
 })
 
 
-
-// // +++++++++++  DASHBOARD PAGE of Customer +++++++++++++
-// // to view dashboard, customer has to be logged in hence customerProtection
-// router.get("/customer/dashboard", auth.customerProtection, (req,res)=>{
-//     console.log(req.customerData)
-//     res.json({ data : req.customerData});
-
-// })
