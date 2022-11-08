@@ -18,17 +18,19 @@ router.post("/customer/register",(req,res)=>{
 
     const firstname = req.body.firstname;
     const lastname = req.body.lastname;
-    const age = req.body.age;
+    const number = req.body.number;
     const password = req.body.password;
     const picture = req.body.picture;
+    const address = req.body.address;
     bcryptjs.hash(password, 10,(e,hashed_pw)=>{
         const data = new Customer({
             firstname:firstname,
             lastname:lastname,
-            age:age,
+            number:number,
             email:email,
             password: hashed_pw,
             picture:picture,
+            address: address,
         })
         data.save()
         .then(()=>{
@@ -69,46 +71,10 @@ router.post("/customer/login",(req,res)=>{
 
 
 
-// +++++++++++  DASHBOARD PAGE of Customer +++++++++++++
-// to view dashboard, customer has to be logged in hence customerProtection
-router.get("/customer/dashboard", auth.customerProtection, (req,res)=>{
-    console.log(req.customerData)
-    res.json({ data : req.customerData});
+// // +++++++++++  DASHBOARD PAGE of Customer +++++++++++++
+// // to view dashboard, customer has to be logged in hence customerProtection
+// router.get("/customer/dashboard", auth.customerProtection, (req,res)=>{
+//     console.log(req.customerData)
+//     res.json({ data : req.customerData});
 
-})
-
-// Customer being able to update their profile
-router.put("/customer/update", auth.customerProtection, (req,res)=>{
-
-    const firstname = req.body.firstname;
-    const lastname = req.body.lastname;
-    const age = req.body.age;
-    const email = req.body.email;
-    console.log(firstname);
-    console.log(firstname);
-
-    Customer.updateOne({_id: req.customerData._id}, {firstname : firstname, lastname : lastname ,age: age, email:email })
-    .then(()=>{
-        res.json({message:"Customer Profile Updated", success: true})
-    })
-    .catch((e)=>{
-        req.json({message: "Sorry! Please try again"})
-    })
-})
-
-// Customer uploading picture after they register and login
-router.put('/customer/picture/update',auth.customerProtection, upload.single('pic'), (req,res)=>{
-    
-    if(req.file==undefined){
-        return res.json({msg:"Invalid file format. Please try with valid format"});
-    }
-    Customer.updateOne({_id: req.customerData._id}, {picture : req.file.filename})
-    .then(()=>{
-        res.json({msg:"Picture Updated Successfully"})
-    })
-    .catch((e)=>{
-        req.json({msg: "Sorry! Please try again"})
-    })
-})
-
-module.exports = router;
+// })
