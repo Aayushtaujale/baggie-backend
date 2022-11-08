@@ -56,7 +56,7 @@ router.post("/customer/login",(req,res)=>{
         const password=req.body.password;
         bcryptjs.compare(password,result.password,(e,success)=>{
             if(success==false){
-                res.status(500).json({message:"Sorry! Invalid Credentials!"});
+                res.status(500).json({message:"Sorry! Invalid Credentials! Try Again"});
                 return;
             }        
             jwt.sign({customer_id : result._id}, "anysecretkey", (e, token)=>{   // generates token/ticket/IDcard ---- with logged in userID
