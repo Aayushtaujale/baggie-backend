@@ -3,8 +3,8 @@ const router = new express.Router();
 const Customer = require("../models/customerModel");
 const bcryptjs=require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const auth = require("../auth/auth");
-const upload = require("../uploads/fileupload");
+// const auth = require("../auth/auth");
+// const upload = require("../uploads/fileupload");
 
 
 router.post("/customer/register",(req,res)=>{
@@ -59,7 +59,7 @@ router.post("/customer/login",(req,res)=>{
                 res.status(500).json({message:"Sorry! Invalid Credentials! Try Again"});
                 return;
             }        
-            jwt.sign({customer_id : result._id}, "anysecretkey", (e, token)=>{   // generates token/ticket/IDcard ---- with logged in userID
+            jwt.sign({customer_id : result._id}, "anysecretkey", (e, token)=>{   
                 res.status(200).json({token: token})
             })
         })
@@ -70,3 +70,4 @@ router.post("/customer/login",(req,res)=>{
 })
 
 
+module.exports = router;

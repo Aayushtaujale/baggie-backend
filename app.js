@@ -10,8 +10,8 @@ app.use(cors());
 
 require("./connection/connection");
 
-const customerRoute = require("./routers/registerRoute");
-app.use(customerRoute);
 
+const customerRoute = require("./routers/customerRoute");
+app.use(customerRoute);
 
 app.listen(90);
