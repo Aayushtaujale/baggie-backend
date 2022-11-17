@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const customer = require("../models/customerModel");
-const venue = require("../models/venueModel");
 
 // CUSOMTER AUTH
 module.exports.customerProtection = (req,res,next)=>{
