@@ -12,10 +12,10 @@ const Category= new mongoose.Schema({
         type:String,
         require: true
     },
-    categoryImage:{
-        type: String,
-        required: true }
-    ,
+    // categoryImage:{
+    //     type: String,
+    //     required: true }
+    // ,
 
  
     // userId: {

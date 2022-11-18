@@ -4,20 +4,22 @@ const express=require("express");
 const router= new express.Router();
 
 const auth= require("../auth/auth");
+const categoryModel = require("../models/categoryModel");
 const Category=require("../models/categoryModel")
 const upload = require("../uploads/fileupload");
 
 //blog categories that is only added by Admin
-router.post("/admin/addcategory",  (req, res)=>{
+router.post("/admin/addcategory",  (req, res, next)=>{
     const categoryName= req.body.categoryName;
-    const categoryDetails=req.body.categoryDetails
+    const categoryDetails=req.body.categoryDetails;
     // const categoryImage=req.body.categoryImage;
-    const data=new Category({
-        categoryName:categoryName,
-        categoryDetails: categoryDetails
+  const data=new categoryModel({
+       categoryName:categoryName,
+       categoryDetails: categoryDetails
         // categoryImage: categoryImage
 
     })
+    console.log(data);
     data.save()
     .then(()=>{
         res.json({msg:"Catgory Added"})
@@ -25,10 +27,6 @@ router.post("/admin/addcategory",  (req, res)=>{
     .catch((e)=>{
         res.json(e)
     })
-    
-
-
-
 })
 
 
@@ -86,7 +84,7 @@ router.delete('/category/delete/:id', (req,res)=>{
 
 
 
-
+//particular category
 router.get("/categorys/:id",  (req, res) => {
     console.log("hey")
     Category.findOne({ _id: req.params.id })
