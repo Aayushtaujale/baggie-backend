@@ -9,13 +9,16 @@ const Category=require("../models/categoryModel")
 const upload = require("../uploads/fileupload");
 
 //blog categories that is only added by Admin
-router.post("/admin/addcategory",  (req, res, next)=>{
+router.post("/admin/addcategory", upload.single('categoryImage'), (req, res, next)=>{
     const categoryName= req.body.categoryName;
     const categoryDetails=req.body.categoryDetails;
+    const categoryImage= req.file.path;
+
     // const categoryImage=req.body.categoryImage;
   const data=new categoryModel({
        categoryName:categoryName,
-       categoryDetails: categoryDetails
+       categoryDetails: categoryDetails,
+       categoryImage: categoryImage
         // categoryImage: categoryImage
 
     })
