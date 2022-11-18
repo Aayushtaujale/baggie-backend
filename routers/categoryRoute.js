@@ -53,13 +53,15 @@ router.put("/cat/update",  (req, res) => {
     console.log(req.body);
     const id = req.body.id;
     const categoryName = req.body.categoryName;
-    const categoryDetails=req.body.categoryDetails
+    const categoryDetails=req.body.categoryDetails;
+    const categoryImage = req.body.categoryImage;
   
     Category.updateOne(
       { _id: id },
       {
         categoryName:categoryName,
-        categoryDetails:categoryDetails
+        categoryDetails:categoryDetails,
+        categoryImage:categoryImage
       }
     )
     
@@ -100,5 +102,28 @@ router.get("/categorys/:id",  (req, res) => {
       });
   });
 
+
+
+
+  
+router.post('/category/picture/update', upload.single('pic'), (req,res)=>{
+  const id = req.body.id
+  console.log("id: " +id)
+  console.log(req.file)
+  // console.log(req.file)     // to show mimetypes
+  if(req.file==undefined){
+      return res.json({msg : "Invalid File Format - Only Jpeg, jpg, and png are supported!"});
+  }
+  categoryModel.updateOne({_id: id}, {categoryImage : req.file.filename})
+  
+  .then(()=>{
+    console.log("Success")
+      res.json({msg: 'Picture Updated!'})
+  })
+  .catch((e)=>{ 
+    console.log(e)
+      res.json({msg: 'Please try again!'})
+  })
+})
 
 module.exports=router
