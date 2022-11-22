@@ -4,7 +4,7 @@ const multer = require("multer");
 // File Upload JavaScript Function
 const storage = multer.diskStorage({
     destination : (req, file, cb)=>{
-        cb(null, './uploadsFolder')
+        cb(null, './uploads')
     },
 
     filename : (req, file, cb)=>{
