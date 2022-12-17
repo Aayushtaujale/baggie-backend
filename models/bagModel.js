@@ -17,10 +17,10 @@ const Bag = new mongoose.Schema({
         type: String
     },
 
-    // userId:{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Customer"
-    // },
+    userId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Customer"
+    },
 
 })
 
