@@ -12,7 +12,7 @@ const upload = require("../uploads/fileupload");
 router.post("/admin/addcategory", upload.single('categoryImage'), (req, res, next)=>{
     const categoryName= req.body.categoryName;
     const categoryDetails=req.body.categoryDetails;
-    const categoryImage= req.file.path;
+    const categoryImage= req.file.filename;
 
     // const categoryImage=req.body.categoryImage;
   const data=new categoryModel({
@@ -32,6 +32,13 @@ router.post("/admin/addcategory", upload.single('categoryImage'), (req, res, nex
     })
 })
 
+router.get("/category/all", (req,res)=>{
+  Category.find().then(result=>{
+      res.status(201).json({success:true,data:result})
+  })
+
+  
+})
 
 // displaying categories
 router.get("/category/display",  (req,res, next)=>{

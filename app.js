@@ -4,10 +4,11 @@ const cors = require('cors');
 
 const app = express();
 app.use(express.json());
+
+app.use(express.static(__dirname+'/uploads'));
 app.use(cors());
 
 
-app.use(express.static(__dirname+'/uploads'));
 require("./connection/connection");
 
 
@@ -18,5 +19,8 @@ app.use(customerRoute);
 
 const categoryRoute=require("./routers/categoryRoute");
 app.use(categoryRoute);
+
+const bagRoute=require("./routers/bagRoute");
+app.use(bagRoute);
 
 app.listen(90);

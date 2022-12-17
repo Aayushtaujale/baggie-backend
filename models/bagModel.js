@@ -6,11 +6,14 @@ const Bag = new mongoose.Schema({
         type: String
     },
 
-    details:{
+    price:{
         type: String
     },
+    description:{
+        type:String
+    },
 
-    picture : {
+    image : {
         type: String
     },
 

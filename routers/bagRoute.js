@@ -1,3 +1,4 @@
+const { application } = require("express");
 const express = require("express");
 const router = new express.Router();
 
@@ -5,23 +6,26 @@ const auth = require("../auth/auth");
 
 const Bag = require("../models/bagModel");
 const { response } = require("express");
+const upload = require("../uploads/fileupload");
 
 
 
-router.post("/add/bag",auth.customerProtection, (req,res)=>{
+router.post("/bag/add",  upload.single('image'),(req,res)=>{
 
     // const userId = req.customerData._id;
     // const venueid = req.body.venueid;
     
     const name=req.body.name;
     
-    const details=req.body.details;
-    const picture=req.body.picture;
+    const price=req.body.price;
+    const description=req.body.description;
+    const image=req.file.filename;
 
-    const data = new Booking({
+    const data = new Bag({
         name:name,
-        details:details,
-        picture:picture,
+        price:price,
+        description:description,
+        image:image
         
     
         
@@ -38,6 +42,11 @@ router.post("/add/bag",auth.customerProtection, (req,res)=>{
 })
 
 
+router.get("/bags/all", (req,res)=>{
+    Bag.find().then(result=>{
+        res.status(201).json({success:true,data:result})
+    })
+})
 
 
 
@@ -45,6 +54,8 @@ router.post("/add/bag",auth.customerProtection, (req,res)=>{
 
 
 
+
+module.exports=router
 
 
 
