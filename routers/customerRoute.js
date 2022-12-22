@@ -3,8 +3,8 @@ const router = new express.Router();
 const Customer = require("../models/customerModel");
 const bcryptjs=require("bcryptjs");
 const jwt = require("jsonwebtoken");
-// const auth = require("../auth/auth");
-// const upload = require("../uploads/fileupload");
+const auth = require("../auth/auth");
+const upload = require("../uploads/fileupload");
 
 
 router.post("/customer/register",(req,res)=>{
@@ -66,6 +66,48 @@ router.post("/customer/login",(req,res)=>{
     })
     .catch(e=>{
         res.json(e)
+    })
+})
+
+router.get("/customer/dashboard", auth.customerProtection, (req,res)=>{
+    console.log(req.customerData)
+    res.json({ data : req.customerData});
+
+})
+
+// Customer being able to update their profile
+router.put("/customer/update", auth.customerProtection, (req,res)=>{
+
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
+    const number = req.body.number;
+    const email = req.body.email;
+    
+    const address = req.body.address;
+    console.log(firstname);
+    console.log(firstname);
+
+    Customer.updateOne({_id: req.customerData._id}, {firstname : firstname, lastname : lastname ,number: number, email:email, address:address})
+    .then(()=>{
+        res.json({message:"Customer Profile Updated", success: true})
+    })
+    .catch((e)=>{
+        req.json({message: "Sorry! Please try again"})
+    })
+})
+
+// Customer uploading picture after they register and login
+router.put('/customer/picture/update',auth.customerProtection, upload.single('pic'), (req,res)=>{
+    
+    if(req.file==undefined){
+        return res.json({msg:"Invalid file format. Please try with valid format"});
+    }
+    Customer.updateOne({_id: req.customerData._id}, {picture : req.file.filename})
+    .then(()=>{
+        res.json({msg:"Picture Updated Successfully"})
+    })
+    .catch((e)=>{
+        req.json({msg: "Sorry! Please try again"})
     })
 })
 
