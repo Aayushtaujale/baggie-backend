@@ -49,6 +49,17 @@ router.get("/bags/all", (req,res)=>{
 })
 
 
+router.get("/bag/display",auth.customerProtection,(req,res)=>{
+    Bag.find({userId:req.customerData._id})
+    .then((data)=>{
+        
+        res.json({data:data})
+    })
+    .catch((e)=>{
+        res.json({error:e})
+    })
+})
+
 
 
 
