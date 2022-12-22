@@ -11,6 +11,17 @@ const Booking = new mongoose.Schema({
         type: String
     },
 
+    name:{
+        type:String
+    },
+
+    address:{
+        type:String
+    },
+    number:{
+        type:String
+    }
+
 
 
 })

@@ -23,4 +23,7 @@ app.use(categoryRoute);
 const bagRoute=require("./routers/bagRoute");
 app.use(bagRoute);
 
+const bookingRoute=require("./routers/bookingRoute");
+app.use(bookingRoute);
+
 app.listen(90);
