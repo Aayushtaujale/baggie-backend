@@ -46,6 +46,36 @@ router.post("/venue/register", (req,res)=>{
     })
 })
 
+// VENUE LOGIN
+
+router.post("/venue/login", (req,res)=>{
+    const email = req.body.email;
+    Venue.findOne({email:email})
+
+    .then((result123)=>{
+        if(result123==null){
+            res.json({msg: 'Invalid Credentials!'})
+            return;
+        }
+
+        const password = req.body.password;
+        bcryptjs.compare(password, result123.password, (e,success)=>{
+            if(success==false){
+                res.json({msg: "Invalid Credentials Password!"})
+                return;
+            }
+
+            jwt.sign({venue_id: result123._id}, "anysecretkey", (e,token)=>{
+                res.json({token: token, venueId:result123._id})
+            })
+        })
+    })
+    .catch(e=>{
+        res.json(e)
+    })
+
+})
+
 
 
 
