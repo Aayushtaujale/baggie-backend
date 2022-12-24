@@ -26,8 +26,8 @@ app.use(bagRoute);
 const bookingRoute=require("./routers/bookingRoute");
 app.use(bookingRoute);
 
-const commentRoute=require("./routers/commentRoute");
-app.use(commentRoute);
+// const commentRoute=require("./routers/commentRoute");
+// app.use(commentRoute);
 
 const venueRoute=require("./routers/venueRoute");
 app.use(venueRoute);
