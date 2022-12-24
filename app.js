@@ -29,4 +29,7 @@ app.use(bookingRoute);
 const commentRoute=require("./routers/commentRoute");
 app.use(commentRoute);
 
+const venueRoute=require("./routers/venueRoute");
+app.use(venueRoute);
+
 app.listen(90);
