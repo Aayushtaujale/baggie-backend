@@ -11,10 +11,12 @@ router.post("/comment/:id", auth.customerProtection,  (req, res)=>{
     const comment= req.body.comment;
     const customerId = req.customerData._id;
     const bagId= req.params.id;
+    const datee = req.body.date;
     const data=new Comment({
         comment:comment,
         customerId: customerId,
-        bagId:bagId
+        bagId:bagId,
+        datee: datee
 
     })
     // console.log(comment)

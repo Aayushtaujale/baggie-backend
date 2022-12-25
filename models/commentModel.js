@@ -15,7 +15,9 @@ const Comment= new mongoose.Schema({
     customerId: {
         type: mongoose.SchemaTypes.ObjectId,
          ref: "Customer"
-     }
+     },
+     date: { type: Date, default: Date.now }
+
 
 
 
