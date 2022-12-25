@@ -42,14 +42,14 @@ router.post("/bag/add",  upload.single('image'),(req,res)=>{
 })
 
 
-router.get("/bags/all", (req,res)=>{
+router.get("/bags/all", auth.customerProtection,(req,res)=>{
     Bag.find().then(result=>{
         res.status(201).json({success:true,data:result})
     })
 })
 
 
-router.get("/bag/display",auth.customerProtection,(req,res)=>{
+router.get("/bag/display", auth.customerProtection,(req,res)=>{
     Bag.find({userId:req.customerData._id})
     .then((data)=>{
         
@@ -60,6 +60,18 @@ router.get("/bag/display",auth.customerProtection,(req,res)=>{
     })
 })
 
+
+
+router.get("/bagg/single/:id", auth.customerProtection, (req, res) => {
+    Bag.findOne({ _id: req.params.id })
+      .then((data) => {
+        
+        res.json({ data: data });
+      })
+      .catch((e) => {
+        res.json({ error: e });
+      });
+  });
 
 
 
