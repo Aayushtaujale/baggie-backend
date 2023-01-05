@@ -9,17 +9,31 @@ const { response } = require("express");
 router.post("/booking/buy",auth.customerProtection, (req,res)=>{
 
     const userId = req.customerData._id;
-    const bagid = req.body.bagid;
+    const item = req.body.item;
     
     const name=req.body.name;
     const address=req.body.address;
     const number=req.body.number;
-    
+    const items=[]
+
+
+console.log(req.body)
+item?.map((itm)=>{
+
+    items.push({
+
+        bagid: itm.id,
+
+        quantity: itm.quantity,
+
+    })
+
+})
    
 
     const data = new Booking({
         userId:userId,
-        bagid:bagid,
+        items:items,
         name:name,
         address:address,
         number:number
@@ -39,7 +53,7 @@ router.post("/booking/buy",auth.customerProtection, (req,res)=>{
 
 // display the booking of logged in user
 router.get("/booking/display",auth.customerProtection,(req,res)=>{
-    Booking.find({userId:req.customerData._id})
+    Booking.find({userId:req.customerData._id}).populate("items.bagid")
     .then((data)=>{
         
         res.json({data:data})
@@ -49,6 +63,18 @@ router.get("/booking/display",auth.customerProtection,(req,res)=>{
     })
 })
 
+
+
+router.get("/booking/displayAll",auth.customerProtection,(req,res)=>{
+    Booking.find({userId:req.customerData._id}).populate("items.bagid")
+    .then((data)=>{
+        
+        res.json({data:data})
+    })
+    .catch((e)=>{
+        res.json({error:e})
+    })
+})
 
 router.get("/booking/single/:id", auth.customerProtection, (req, res) => {
     Booking.findOne({ _id: req.params.id })
@@ -73,5 +99,8 @@ router.get("/booking/single/:id", auth.customerProtection, (req, res) => {
         res.json({error:e})
     })
 })
+
+
+
 
 module.exports = router;

@@ -6,10 +6,7 @@ const Booking = new mongoose.Schema({
         ref: "Customer"
     },
 
-    bagid: {
-        
-        type: String
-    },
+   
 
     name:{
         type:String
@@ -20,7 +17,18 @@ const Booking = new mongoose.Schema({
     },
     number:{
         type:String
-    }
+    },
+    items:[
+        {
+            bagid: {
+        
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Bag"
+            },quantity:{type:Number,default:1},
+            name:{type:String}
+        }
+
+    ]
 
 
 

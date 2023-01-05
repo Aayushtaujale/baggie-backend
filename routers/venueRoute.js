@@ -76,6 +76,57 @@ router.post("/venue/login", (req,res)=>{
 
 })
 
+router.get("/venue/all", (req,res)=>{
+    Venue.find().then(result=>{
+        res.status(201).json({success:true,data:result})
+    })
+
+    
+})
+
+router.get("/venue/dashboard", auth.venueProtection, (req,res)=>{
+    console.log(req.venueData)
+    res.json({ data : req.venueData});
+})
+
+//finding bookings
+router.get("/venue/bookings", (req,res)=>{
+    bookingModel.find().then(result=>{
+        res.status(201).json({success:true,data:result})
+    })
+   
+})
+
+
+// posting venue id
+router.post("/venue/bookings", (req,res)=>{
+    console.log(req.body)
+    bookingModel.find({venueid:req.body.venueId}).populate("items.bagid")
+    .then(result=>{
+        res.status(201).json({success:true,data:result})
+    })
+   
+})
+
+router.put("/venue/update", auth.venueProtection, (req,res)=>{
+    res.json({msg: 'Venue Updated Successfully!'})
+
+})
+
+//updating picture of venue
+router.put('/venue/picture/update',auth.venueProtection, upload.single('pic'), (req,res)=>{
+    
+    if(req.file==undefined){
+        return res.json({msg:"Invalid file format. Please try with valid format"});
+    }
+    Venue.updateOne({_id: req.venueData._id}, {picture : req.file.filename})
+    .then(()=>{
+        res.json({msg:"Picture Updated Successfully"})
+    })
+    .catch((e)=>{
+        req.json({msg: "Sorry! Please try again"})
+    })
+})
 
 
 

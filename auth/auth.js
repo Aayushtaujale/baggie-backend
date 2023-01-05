@@ -27,3 +27,33 @@ module.exports.customerProtection = (req,res,next)=>{
 }
 
 
+// VENUE AUTH
+
+module.exports.venueProtection = (req,res,next)=>{
+    console.log("Heree")
+
+    try{
+    // receiving token here
+    const token = req.headers.authorization.split(" ")[1];
+    // token verification
+    // the logged in user id is available in data variable below
+    const data = jwt.verify(token, 'anysecretkey');
+    console.log(data);
+    venue.findOne({_id : data.venue_id})
+    .then((result)=>{
+        console.log(result)
+        req.venueData = result;          // if everything is valid, store here
+        next();
+    })
+    
+    .catch((e)=>{
+        console.log(e)
+        res.json({msg: 'Invalid Token'})
+    })
+}
+    catch(e){
+        console.log(e)
+        res.json({msg: 'Invalid Access!'})
+    }
+    // console.log(token)
+}

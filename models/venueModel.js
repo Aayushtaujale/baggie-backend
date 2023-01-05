@@ -32,6 +32,16 @@ const Venue = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Customer"
     },
+    items:[
+        {
+            bagid: {
+        
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Bag"
+            },quantity:{type:Number,default:1}
+        }
+
+    ]
 
 })
 
