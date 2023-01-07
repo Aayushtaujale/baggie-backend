@@ -5,20 +5,25 @@ const auth = require("../auth/auth");
 
 const Booking = require("../models/bookingModel");
 const { response } = require("express");
+const upload = require("../uploads/fileupload");
 
-router.post("/booking/buy",auth.customerProtection, (req,res)=>{
+
+router.post("/booking/buy",auth.customerProtection,upload.single('image'), (req,res)=>{
 
     const userId = req.customerData._id;
-    const item = req.body.item;
+    let item = req.body.item;
     
     const name=req.body.name;
     const address=req.body.address;
+    // const image=req.body.image;
     const number=req.body.number;
+    const image=req.file.filename;
     const items=[]
 
 
-console.log(req.body)
-item?.map((itm)=>{
+console.log(req.body.item)
+item=JSON.parse(item)
+item.map((itm)=>{
 
     items.push({
 
@@ -36,7 +41,8 @@ item?.map((itm)=>{
         items:items,
         name:name,
         address:address,
-        number:number
+        number:number,
+        image:image,
     
         
     })
@@ -100,6 +106,20 @@ router.get("/booking/single/:id", auth.customerProtection, (req, res) => {
     })
 })
 
+
+// router.put('/booking/buy',auth.customerProtection, upload.single('pic'), (req,res)=>{
+//     const id = req.body.id
+//     if(req.file==undefined){
+//         return res.json({msg:"Invalid file format. Please try with valid format"});
+//     }
+//     Booking.updateOne({_id: id}, {image : req.file.filename})
+//     .then(()=>{
+//         res.json({msg:"Picture Updated Successfully"})
+//     })
+//     .catch((e)=>{
+//         req.json({msg: "Sorry! Please try again"})
+//     })
+// })
 
 
 

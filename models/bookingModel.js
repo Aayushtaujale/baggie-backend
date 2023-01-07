@@ -18,6 +18,10 @@ const Booking = new mongoose.Schema({
     number:{
         type:String
     },
+    image : {
+        type: String
+    },
+
     items:[
         {
             bagid: {

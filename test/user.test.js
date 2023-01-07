@@ -29,4 +29,22 @@ beforeAll(async () => {
         expect(customer_ret.firstname).toEqual("govinda");
       });
     });
+
+
+    //testing if the update is working
+    it("Updating the user testing", async () => {
+      const status = await Customer.updateOne(
+        { firstname: "govinda" },
+        {
+          firstname: "hari",
+          lastname: "kumar",
+        }
+      );
+      expect(status.ok);
+    });
+    // delete testing;
+    it("Deleting the user teting", async () => {
+      const status = await Customer.findOneAndDelete({ firstname: "hari" });
+      expect(status.ok);
+    });
 });

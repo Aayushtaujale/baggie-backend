@@ -42,7 +42,7 @@ router.post("/bag/add",  upload.single('image'),(req,res)=>{
 })
 
 
-router.get("/bags/all", auth.customerProtection,(req,res)=>{
+router.get("/bags/all",(req,res)=>{
     Bag.find().then(result=>{
         res.status(201).json({success:true,data:result})
     })
@@ -73,7 +73,17 @@ router.get("/bagg/single/:id", auth.customerProtection, (req, res) => {
       });
   });
 
-
+  router.delete('/bag/delete/:id',(req,res)=>{
+    const id = req.params.id;
+    
+    Bag.deleteOne({_id:id})
+    .then(()=>{
+        res.json({msg: 'Bag removed success',status:true})
+    })
+    .catch((e)=>{
+        res.json({error:e})
+    })
+})
 
 
 
