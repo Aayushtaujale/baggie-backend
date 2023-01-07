@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Venue = require("../models/venueModel");
+const Booking = require("../models/bookingModel");
 const url =
   "mongodb://127.0.0.1:27017/baggie";
 
@@ -15,34 +15,33 @@ beforeAll(async () => {
   describe("Testing venue schema", () => {
     //the code below is for insert testing
     it("Add user testing", () => {
-      const venueData = {
-        name: "testadmin",
-        address: "kathmandu",
-        phone: "989898",
-        email: "testadmin@gmail.com",
-        password: "testadmin",
-        picture: "venue",
+      const bookingData = {
         userId: "62afed9ab8b7fe21be54ac4f",
+        name: "shrestha",
+        address: "Chitwan",
+        number: "50",
+        image:"image",
+        
       };
-      return Venue.create(venueData).then((venue_ret) => {
-        expect(venue_ret.name).toEqual("testadmin");
+      return Booking.create(bookingData).then((booking_ret) => {
+        expect(booking_ret.number).toEqual("50");
       });
     });
     //testing if the update is working
-    it("Updating the venue testing", async () => {
-      const status = await Venue.updateOne(
-        { name: "testadmin" },
+    it("Updating the user testing", async () => {
+      const status = await Booking.updateOne(
+        { number: "984141" },
         {
-          name: "testadminadmin",
-          address: "pokhara",
+          number: "9851",
+          address: "Lumbini",
         }
       );
       expect(status.ok);
     });
     // delete testing;
     it("Deleting the user teting", async () => {
-      const status = await Venue.findOneAndDelete({ name: "testadminadmin" });
-      expect(status.ok);
+      const status = await Booking.findOneAndDelete({ number: "9851" });
+      expect(status);
     });
     //the below code is for update testing here
   });
