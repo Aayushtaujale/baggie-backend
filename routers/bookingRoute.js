@@ -17,7 +17,12 @@ router.post("/booking/buy",auth.customerProtection,upload.single('image'), (req,
     const address=req.body.address;
     // const image=req.body.image;
     const number=req.body.number;
-    const image=req.file.filename;
+    let image
+    try {
+         image=req.file.filename;
+    } catch (error) {
+        image="file"
+    }
     const items=[]
 
 
